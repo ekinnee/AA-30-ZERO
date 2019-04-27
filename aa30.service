@@ -1,0 +1,13 @@
+[Unit]
+Description=AA-30 / Arduino / Nextion serial bridge.
+After=syslog.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/AA-30-ZERO
+ExecStart=/home/pi/AA-30-ZERO/aa30.py
+
+[Install]
+WantedBy=multi-user.target
