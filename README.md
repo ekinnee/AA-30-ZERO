@@ -18,3 +18,5 @@ Output commands from the LCD over serial
 Interpret those commands in the Python scipt, send the coresponding command to the AA-30
 
 Inpterpret and plot the return data from the AA-30 on a Waveform on the LCD
+
+Possibly integrate https://github.com/vsergeev/rigexpert-tool rather than "re-invent the wheel"

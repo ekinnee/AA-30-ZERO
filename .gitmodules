@@ -1,0 +1,3 @@
+[submodule "rigexpert-tool"]
+	path = rigexpert-tool
+	url = https://github.com/vsergeev/rigexpert-tool.git
