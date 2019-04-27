@@ -8,7 +8,7 @@ Same thing as shown in the "Getting Started" on RigExert's site.
 
 # aa30.py
 A Python script that listens for input from the Nextion on the serial port and causes the AA-30 ZERO
-to analyze the specified Amateur Radio band frequency's SWR rating given the connected antenna and reactance.
+to analyze the specified Amateur Radio band frequency's SWR rating given the connected antenna and measure its reactance.
 
 # TODO
 Make the LCD work
