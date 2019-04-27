@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-import time
-import os
-from time import sleep
-import serial
-import re
 
+import atexit
+import os
+import re
+import time
+import serial
+
+#Define the ham bands
 Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'],\
           'Eighty' : ['fq3750000', 'sw500000', 'frx50'],\
           'Sixty' : [['fq5331900', 'sw2800', 'frx3'],\
@@ -20,10 +22,16 @@ Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'],\
           'Ten' : ['fq28985000', 'sw1970000', 'frx50'] 
 }
 
-swr = 0
-swr_data = ()
+#Serial port
 ser = serial
 
+#Register atexit to close the serial port nicely
+atexit.register(exit_handler)
+
+def exit_handler():
+    ser.close()
+
+#Handle the command to get the SWR readings for the given band
 def GetSWR(band):
      if band == 'Sixty':
           for channel in Band[band] :
@@ -33,22 +41,24 @@ def GetSWR(band):
           for swrreq in Band[band]:
                SendCmd(swrreq)
 
+#Write the commands to the AA-30 one at a time pausing after each
 def SendCmd(cmd):
      ser.write(bytes((cmd + '\r\n'), "ascii"))
      time.sleep(.3)
 
+#Currently only print out the return from the SWR readings and ERROR conditions
 def FromAA(data):
-     print(data)
+     if re.match('(.+?),(.+?),(.+)', data) is not None or re.match('ERROR', data) is not None:
+          # For now just printing data
+          print(data)
 
+#Init stuff
 if __name__== '__main__':
      ser = serial.Serial('COM15', baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=20, xonxoff=0, rtscts=0)
 
+     #Testing
      GetSWR('Sixty')
 
+#Main loop that handles return data from the serial port
 while ser.is_open:
-     line = ser.readline().decode("ascii", "ignore").strip()
-
-     if re.match('(.+?),(.+?),(.+)', line) is not None or re.match('ERROR', line) is not None:
-          FromAA(line)
-
-ser.close()
+     FromAA(ser.readline().decode("ascii", "ignore").strip())
