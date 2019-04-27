@@ -25,11 +25,11 @@ Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'],\
 #Serial port
 ser = serial
 
-#Register atexit to close the serial port nicely
-atexit.register(exit_handler)
-
 def exit_handler():
     ser.close()
+
+#Register atexit to close the serial port nicely
+atexit.register(exit_handler)
 
 #Handle the command to get the SWR readings for the given band
 def GetSWR(band):
@@ -47,13 +47,24 @@ def SendCmd(cmd):
      time.sleep(.3)
 
 #Currently only print out the return from the SWR readings and ERROR conditions
-def FromAA(data):
-     if re.match('(.+?),(.+?),(.+)', data) is not None or re.match('ERROR', data) is not None:
-          # For now just printing data
-          print(data)
+def FromSerial(data):
+     #Command data is formatted cmd:<command>
+     parts = data.split(';')
+     #Is it a command from the LCD?
+     if parts[0] == 'cmd':
+          #We only get SWR
+          for b in Band:
+               if Band[b] == data:
+                    SendCmd(data)
+     #Not a command, must be return data.
+     else:
+          if re.match('(.+?),(.+?),(.+)', data) is not None or re.match('ERROR', data) is not None:
+               # For now just printing data
+               print(data)
 
 #Init stuff
 if __name__== '__main__':
+     #Open the serial port that the arduino is connected to
      ser = serial.Serial('COM15', baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=20, xonxoff=0, rtscts=0)
 
      #Testing
@@ -61,4 +72,4 @@ if __name__== '__main__':
 
 #Main loop that handles return data from the serial port
 while ser.is_open:
-     FromAA(ser.readline().decode("ascii", "ignore").strip())
+     FromSerial(ser.readline().decode("ascii", "ignore").strip())
