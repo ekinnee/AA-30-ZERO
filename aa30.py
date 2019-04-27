@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import atexit
 import os
@@ -19,7 +19,7 @@ Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'], \
           'Seventeen' : ['fq18118000', 'sw100000', 'frx10'], \
           'Fifteen' : ['fq21225000', 'sw450000', 'frx45'], \
           'Twelve' : ['fq24940000', 'sw100000', 'frx10'], \
-          'Ten' : ['fq28985000', 'sw1970000', 'frx50'] 
+          'Ten' : ['fq28985000', 'sw1970000', 'frx50']
 }
 
 #Serial port
@@ -41,6 +41,12 @@ def GetSWR(band):
      else:
           for swrreq in Band[band]:
                SendCmd(swrreq)
+
+def RebootPi():
+     os.system('sudo shutdown -r now')
+
+def ShutdownPi():
+     os.system('sudo shutdown -P now')
 
 #Write the commands to the AA-30 one at a time pausing after each
 def SendCmd(cmd):
