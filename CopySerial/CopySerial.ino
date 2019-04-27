@@ -13,7 +13,7 @@ void setup() {
   Serial.begin(38400); // init PC side UART
   Serial.setTimeout(1000);
   Serial.flush();
-  Serial.write("Init done.\r\n");
+  //Serial.write("Init done.\r\n");
 }
 
 void loop() {
