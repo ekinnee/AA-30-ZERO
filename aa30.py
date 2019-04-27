@@ -66,8 +66,9 @@ def FromSerial(data):
 #Init stuff
 if __name__== '__main__':
      #Open the serial port that the arduino is connected to. The AA-30 ZERO only goes 38400 max
-     ser = serial.Serial('COM15', baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=20, xonxoff=0, rtscts=0)
+     ser = serial.Serial('/dev/ttyACM0', baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=20, xonxoff=0, rtscts=0)
 
 #Main loop that handles return data from the serial port
 while ser.is_open:
-     FromSerial(ser.readline().decode("ascii", "ignore").strip())
+     while ser.in_waiting():
+          FromSerial(ser.readline().decode("ascii", "ignore").strip())
