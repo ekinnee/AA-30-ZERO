@@ -24,6 +24,7 @@ Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'], \
 
 #Serial port
 ser = serial
+ama = serial
 
 def exit_handler():
     ser.close()
@@ -56,25 +57,28 @@ def SendCmd(cmd):
 #Basic handler for commands from the LCD and return data from the AA-30.
 def FromSerial(data):
      #Command data is formatted cmd:<command>
-     parts = data.split(';')
+     #parts = data.split(';')
      #Is it a command from the LCD?
-     if parts[0] == 'cmd':
+     #if parts[0] == 'cmd':
           #We only get SWR
-          for b in Band:
-               if Band[b] == data:
-                    SendCmd(data)
+     #     for b in Band:
+     #          if Band[b] == data:
+     #               SendCmd(data)
      #Not a command, must be return data.
-     else:
-          if re.match('(.+?),(.+?),(.+)', data) is not None or re.match('ERROR', data) is not None:
-               # For now just printing data
-               print(data)
+     #else:
+     if re.match('(.+?),(.+?),(.+)', data) is not None or re.match('ERROR', data) is not None:
+     # For now just printing data
+        print(data)
 
 #Init stuff
 if __name__== '__main__':
      #Open the serial port that the arduino is connected to. The AA-30 ZERO only goes 38400 max
      ser = serial.Serial('/dev/ttyACM0', baudrate=38400, bytesize=8, parity='N', stopbits=1, timeout=20, xonxoff=0, rtscts=0)
+     ama = serial.Serial('/dev/ttyAMA0')
+
+     GetSWR('Twelve')
 
 #Main loop that handles return data from the serial port
-while ser.is_open:
-     while ser.in_waiting():
-          FromSerial(ser.readline().decode("ascii", "ignore").strip())
+while True:
+    FromSerial(ser.readline().decode('ascii', 'ignore').strip())
+    print('From AMA ' + ama.readline().decode('ascii', 'ignore').strip())

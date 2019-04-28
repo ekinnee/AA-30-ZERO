@@ -1,6 +1,10 @@
 #include <SoftwareSerial.h>
+#include <avr/interrupt.h>
 
 SoftwareSerial ZERO(4, 7); // RX, TX
+
+const int rxpin = 0; // pin used to receive
+const int txpin = 1; // pin used to send
 
 void software_Reset()
 {
@@ -8,12 +12,15 @@ void software_Reset()
 } 
 
 void setup() {
+  sei();
   ZERO.begin(38400); // init AA side UART
   ZERO.flush();
-  Serial.begin(38400); // init PC side UART
+  Serial.begin(38400);
   Serial.setTimeout(1000);
-  Serial.flush();
-  //Serial.write("Init done.\r\n");
+
+  while (!Serial) {
+  }
+
 }
 
 void loop() {
