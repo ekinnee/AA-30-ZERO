@@ -24,6 +24,7 @@ Band = { 'OneSixty' : ['fq1900000', 'sw200000' , 'frx20'], \
 
 #Serial port
 ser = serial
+ama = serial
 
 def Error():
      pass
@@ -66,6 +67,7 @@ def FromSerial(data):
                # For now just printing data
                print(data)
 
+
 #Basic handler for data from the LCD
 def FromLcd(data):
      #Command data is formatted <command>:<param>
@@ -89,7 +91,6 @@ if __name__== '__main__':
      
      #Testes Testes 1. 2. 4.
      ser.write(b'VER\r\n')
-
 
 #Main loop that handles return data from the serial port
 while True:
