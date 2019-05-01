@@ -83,19 +83,25 @@ def FromLcd(data):
 
 #Init stuff
 if __name__== '__main__':
-     #Open the serial port that the arduino is connected to. The AA-30 ZERO only goes 38400 max
-     ser = serial.Serial()
-     ser.port = 'COM8'
-     ser.baudrate = 38400
-     ser.open()
-     
-     #Testes Testes 1. 2. 4.
-     ser.write(b'VER\r\n')
+    ser = serial.Serial('/dev/ttyACM0', baudrate=1200)
+    ser.close()
+    #Open the serial port that the arduino is connected to. The AA-30 ZERO only goes 38400 max
+    ser = serial.Serial()
+    ser.port = '/dev/ttyACM0'
+    ser.baudrate = 38400
+    ser.open()
+    ser.flushInput()
+    ser.flushOutput()
+
+    #Testes Testes 1. 2. 4.
+    ser.write(b'VER\r\n')
+    ser.flush()
 
 #Main loop that handles return data from the serial port
 while True:
      #FromSerial(ser.readline().decode("ascii", "ignore").strip())
-     print(ser.readline())
+     if ser.inWaiting() > 0:
+         print(ser.readline())
 
 def exit_handler():
     ser.close()
