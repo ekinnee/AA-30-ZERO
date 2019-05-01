@@ -8,19 +8,20 @@ void software_Reset()
 } 
 
 void setup() {
-  ZERO.begin(38400); // init AA side UART
-  ZERO.flush();
-  Serial.begin(38400); // init PC side UART
-  Serial.setTimeout(1000);
-  Serial.flush();
-  //Serial.write("Init done.\r\n");
+  ZERO.begin(38400);
+  Serial.begin(38400);
+  while(!Serial) {
+    //wait for serial monitor to connect
+  }
 }
 
 void loop() {
-  if (ZERO.available()) {
-    Serial.write(ZERO.read());
-  }
-  if (Serial.available()) {
+  if (Serial.available())
+  {
     ZERO.write(Serial.read());
+  }
+  if (ZERO.available())
+  {
+    Serial.write(ZERO.read());
   }
 }
