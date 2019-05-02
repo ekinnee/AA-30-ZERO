@@ -63,11 +63,9 @@ def FromSerial(data):
     if re.match('ERROR', data):
         Error()
     if re.match('Ready', data):
-         ready = 1
-     #Not a command, must be return data.
+        ready = 1
     else:
         if re.match('(.+?),(.+?),(.+)', data) is not None:
-            # For now just printing data
             print(data)
 
 
@@ -95,7 +93,7 @@ if __name__== '__main__':
     ser.flushInput()
     ser.flushOutput()
     #8 seconds is just long enough for the Uno to reboot
-    time.sleep(9)
+    time.sleep(10)
     GetSWR('Twelve')
 
 #Main loop that handles return data from the serial port
