@@ -1,3 +1,5 @@
+//Copyright (C) 2019 Erick Kinnee erick@kinnee.net
+
 #include <SoftwareSerial.h>
 
 SoftwareSerial ZERO(4, 7); // RX, TX

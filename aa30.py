@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+#Copyright (C) 2019 Erick Kinnee erick@kinnee.net
+
 import atexit
 import os
 import re
