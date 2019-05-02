@@ -8,19 +8,23 @@ void software_Reset()
 } 
 
 void setup() {
-    ZERO.begin(38400);
-    Serial.begin(38400);
-    while (!Serial)
-    {}
+  Serial.begin(38400);
+  while (!Serial)
+  {
+  }
+  ZERO.begin(38400);
+  while (!ZERO)
+  {
+  }
 }
 
 void loop() {
-    if (Serial.available() > 0)
-    {
-        ZERO.write(Serial.read());
-    }
-    if (ZERO.available() > 0)
-    {
-        Serial.write(ZERO.read());
-    }
+  if (Serial.available())
+  {
+    ZERO.write(Serial.read());
+  }
+  if (ZERO.available())
+  {
+    Serial.write(ZERO.read());
+  }
 }
