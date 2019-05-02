@@ -20,3 +20,5 @@ Interpret those commands in the Python scipt, send the coresponding command to t
 Inpterpret and plot the return data from the AA-30 on a Waveform on the LCD
 
 Possibly integrate https://github.com/vsergeev/rigexpert-tool rather than "re-invent the wheel"
+
+Copyright (C) 2019 Erick Kinnee erick@kinnee.net
