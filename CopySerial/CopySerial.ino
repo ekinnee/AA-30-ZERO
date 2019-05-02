@@ -12,6 +12,7 @@ void setup() {
     Serial.begin(38400);
     while (!Serial)
     {}
+    Serial.println("Ready");
 }
 
 void loop() {
