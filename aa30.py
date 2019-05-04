@@ -93,7 +93,7 @@ def FromLcd(data):
 if __name__== '__main__':
     #Open the serial port that the arduino is connected to.
     #The AA-30 ZERO only goes 38400 max
-    ser = serial.Serial('/dev/ttyACM0', baudrate = 38400)
+    ser = serial.Serial('COM8', baudrate = 38400)
     ser.flushInput()
     ser.flushOutput()
     #8 seconds is just long enough for the Uno to reboot
@@ -103,7 +103,8 @@ if __name__== '__main__':
 #Main loop that handles return data from the serial port
 while True:
     if ser.inWaiting() > 0:
-        FromSerial(ser.readline().decode("ascii", "ignore").strip())
+        #FromSerial(ser.readline().decode("ascii", "ignore").strip())
+        ser.readline()
 
 def exit_handler():
     ser.close()
