@@ -65,11 +65,9 @@ def FromSerial(data):
     if re.match('ERROR', data):
         Error()
     if re.match('Ready', data):
-         ready = 1
-     #Not a command, must be return data.
+        ready = 1
     else:
         if re.match('(.+?),(.+?),(.+)', data) is not None:
-            # For now just printing data
             print(data)
 
 
